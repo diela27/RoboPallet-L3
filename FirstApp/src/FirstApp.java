@@ -14,7 +14,7 @@ public class FirstApp {
         g.drawString("Hello World", 0, 0, GraphicsLCD.VCENTER |
                 GraphicsLCD.LEFT);
         
-        Delay.msDelay(5000);//UHDYGY
+        Delay.msDelay(5000);//UHDYGYGGFF
     }
 
 }
