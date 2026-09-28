@@ -97,7 +97,7 @@ public class Mouvement {
     	    Delay.msDelay(100);
 
     	    stoproue();  */
-	    	Motor.A.rotate(360);
+	    	Motor.A.rotate(360);//
 	    	
 	    }
 	    
