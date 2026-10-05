@@ -24,6 +24,6 @@ public class testcapteur {
             LCD.drawString(mesure[0] + " m", 0, 1);
         }
 
-        capteur.close();//uhu
+        capteur.close();//uh
     }
 }
