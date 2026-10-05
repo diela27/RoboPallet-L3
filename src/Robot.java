@@ -29,7 +29,7 @@ public class Robot {
 	        mv.stoproue();
 	    }
 	   public void  tourComplet() {
-		   mv.tourComplet();//klsifehu
+		   mv.tourComplet();//klsifehujjjf
 	   }
 	}
 
