@@ -6,7 +6,7 @@ public class pallette {
 	
 
 
-//
+//kk
 	    /**
 	     * @param args
 	     */
