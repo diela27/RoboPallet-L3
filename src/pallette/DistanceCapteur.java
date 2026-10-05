@@ -6,7 +6,7 @@ import lejos.hardware.sensor.EV3IRSensor;
 import lejos.utility.Delay;
 public class DistanceCapteur {
 	
-
+//test
 	    private EV3IRSensor capteur;
 
 	    private static final float DISTANCE_MAX = 0.50f; 
