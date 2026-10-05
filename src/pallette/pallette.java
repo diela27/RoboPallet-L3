@@ -17,6 +17,6 @@ public class pallette {
 	                GraphicsLCD.LEFT);
 	        
 	        Delay.msDelay(5000);
-	    }
+	    }//
 	}
 
