@@ -1,283 +1,107 @@
 package MonProject;
-import lejos.hardware.motor.Motor;
-import lejos.hardware.motor.NXTRegulatedMotor;
-import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.robotics.Color;
-import lejos.robotics.SampleProvider;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.Port;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
 
 public class Action {
-
-    private NXTRegulatedMotor moteurGauche;
-    private NXTRegulatedMotor moteurDroit;
-public int distance;
-    private int vitesse = 300;
-
-
-    private EV3ColorSensor capteurCouleur;
-    private SampleProvider modeCouleur;
-    private float[] echantillonCouleur;
-
-    public Action() {
-
-       
-        moteurGauche = Motor.A;
-        moteurDroit = Motor.C;
-
-        moteurGauche.setSpeed(vitesse);
-        moteurDroit.setSpeed(vitesse);
-
-        
-        capteurCouleur = new EV3ColorSensor(SensorPort.S3);
-
-        modeCouleur = capteurCouleur.getColorIDMode();
-
-        echantillonCouleur =
-                new float[modeCouleur.sampleSize()];
-    }
-
-
-
-    public void setVitesse(int vitesse) {
-
-        this.vitesse = vitesse;
-
-        moteurGauche.setSpeed(vitesse);
-        moteurDroit.setSpeed(vitesse);
-    }
-
-
-    public void avancer() {
-
-        moteurGauche.forward();
-        moteurDroit.forward();
-    }
-
-
-    public void avancer(int distance) {
-
-        int angle = distanceEnDegres(distance);
-
-        moteurGauche.rotate(angle, true);
-        moteurDroit.rotate(angle);
-    }
-
-
-    public void avancer(int distance, int vitesse) {
-
-        setVitesse(vitesse);
-
-        int angle = distanceEnDegres(distance);
-
-        moteurGauche.rotate(angle, true);
-        moteurDroit.rotate(angle);
-    }
-
-
-    public void avancerAsync(int distance) {
-
-        int angle = distanceEnDegres(Math.abs(distance));
-
-        if (distance >= 0) {
-
-            moteurGauche.rotate(angle, true);
-            moteurDroit.rotate(angle, true);
-
-        } else {
-
-            moteurGauche.rotate(-angle, true);
-            moteurDroit.rotate(-angle, true);
-        }
-    }
-
-
-    public void reculer() {
-
-        moteurGauche.backward();
-        moteurDroit.backward();
-    }
-
-
-    public void reculer(int distance) {
-
-        int angle = distanceEnDegres(Math.abs(distance));
-
-        moteurGauche.rotate(-angle, true);
-        moteurDroit.rotate(-angle);
-    }
-
-
-    public void reculer(int distance, int vitesse) {
-
-        setVitesse(vitesse);
-
-        int angle = distanceEnDegres(Math.abs(distance));
-
-        moteurGauche.rotate(-angle, true);
-        moteurDroit.rotate(-angle);
-    }
-
-
-    public void tournerG(int angle) {
-
-        moteurGauche.rotate(-angle, true);
-        moteurDroit.rotate(angle);
-    }
-
-    public void tournerD(int angle) {
-
-        moteurGauche.rotate(angle, true);
-        moteurDroit.rotate(-angle);
-    }
-
-    public void asyncTournerG(int angle) {
-
-        moteurGauche.rotate(-angle, true);
-        moteurDroit.rotate(angle, true);
-    }
-
-
-    
-    public void asyncTournerD(int angle) {
-
-        moteurGauche.rotate(angle, true);
-        moteurDroit.rotate(-angle, true);
-    }
-
-    public boolean isMoving() {
-
-        return moteurGauche.isMoving()
-                || moteurDroit.isMoving();
-    }
-
-
-    public void stop() {
-
-        moteurGauche.stop(true);
-        moteurDroit.stop();
-    }
-
-
-    public void seDecalerD() {
-
-        moteurGauche.rotate(180, true);
-        moteurDroit.rotate(-180);
-    }
-
-
-   
-    public void seDecalerD(int distance) {
-
-        moteurGauche.rotate(distance, true);
-        moteurDroit.rotate(-distance);
-    }
-
-
-    public void seDecalerG() {
-
-        moteurGauche.rotate(-180, true);
-        moteurDroit.rotate(180);
-    }
-
-
-    public void seDecalerG(int distance) {
-
-        moteurGauche.rotate(-distance, true);
-        moteurDroit.rotate(distance);
-    }
-
-
-    public void avancerJusqueCouleur(String couleurRecherchee) {
-
-        avancer();
-
-        while (true) {
-
-            modeCouleur.fetchSample(echantillonCouleur, 0);
-
-            int couleurDetectee =
-                    (int) echantillonCouleur[0];
-
-            if (couleurRecherchee.equalsIgnoreCase("blanc")
-                    && couleurDetectee == Color.WHITE) {
-
-                break;
-            }
-
-            if (couleurRecherchee.equalsIgnoreCase("noir")
-                    && couleurDetectee == Color.BLACK) {
-
-                break;
-            }
-
-            if (couleurRecherchee.equalsIgnoreCase("rouge")
-                    && couleurDetectee == Color.RED) {
-
-                break;
-            }
-
-            if (couleurRecherchee.equalsIgnoreCase("vert")
-                    && couleurDetectee == Color.GREEN) {
-
-                break;
-            }
-
-            if (couleurRecherchee.equalsIgnoreCase("bleu")
-                    && couleurDetectee == Color.BLUE) {
-
-                break;
-            }
-        }
-
-        stop();
-    }
-
-
-    public void avancerJusqueLigne() {
-
-        avancer();
-
-        while (true) {
-
-            modeCouleur.fetchSample(echantillonCouleur, 0);
-
-            int couleurDetectee =
-                    (int) echantillonCouleur[0];
-
-            if (couleurDetectee == Color.BLACK) {
-                break;
-            }
-        }
-
-        stop();
-    }
-    
-    public int distanceEnDegres(int distance) {         
-
-        return distance * 10;
-    }
-
-    public void fermer() {
-
-        stop();
-
-        capteurCouleur.close();
-    }
-    public void test3palets1(boolean droite) {
-        if (droite) {
-            seDecalerD();
-        } else {
-            seDecalerG();
-        }
-    }
-    public void recalibrage() {
-
-        stop();
-
-        // Avance doucement pour retrouver la ligne
-        avancer(50, 100);
-
-        stop();
-    }}
-
-   	
+	private Chassis chassis ; 
+	private MovePilot pilot ;
+	
+	public Action() {
+		this(MotorPort.D,MotorPort.C);
+	}
+	
+	public Action(Port mG, Port mD) {
+		EV3LargeRegulatedMotor m1 = new EV3LargeRegulatedMotor(mG);
+		EV3LargeRegulatedMotor m2 = new EV3LargeRegulatedMotor(mD);
+		Wheel motorG = WheeledChassis.modelWheel(m1, 56).offset(-60);
+		Wheel motorD = WheeledChassis.modelWheel(m2, 56).offset(60);
+		chassis = new WheeledChassis(new Wheel[]{ motorG, motorD }, WheeledChassis.TYPE_DIFFERENTIAL);
+		pilot = new MovePilot(chassis);
+	}
+
+//-------------------------------------------------Motricité---------------------------------------------------
+	
+	public void avancer() { // avancer jusqu'a la méthode stop
+		pilot.forward();
+	}
+	
+	public void avancer(int speed) { // même méthode qu'avant avec une vitesse
+		pilot.setLinearSpeed(speed);
+		pilot.forward();
+	}
+	
+	public void avancer(int distance, int speed) { // même méthode qu'avant avec une distance
+		pilot.setLinearSpeed(speed);
+		pilot.travel(distance);
+		pilot.stop(); 
+	}
+	
+	public void avancerAsync(int distance) { // avancer de manière asynchrone
+		pilot.travel(distance,true);
+	}
+	
+	public void reculer() { // le robot recule
+		pilot.backward();
+	}
+	
+	public void reculer(int distance, int speed) { // reculer d'une certaine distance, et d'une certaine vitesse 
+		pilot.setLinearSpeed(speed);
+		pilot.travel(-distance);
+		pilot.stop(); 
+	}
+	
+	public void stop() { // stop les roues du robot
+		pilot.stop();
+	}
+	
+//--------------------------------------------------Rotations----------------------------------------------------
+	
+	public void tournerD(int angle) { // tourner d'un certain angle a droite
+		pilot.setAngularSpeed(100);
+		pilot.rotate(1.033*(double)angle);
+	}
+	
+	public void tournerG(int angle) { // tourner d'un certain angle a gauche
+		pilot.setAngularSpeed(100);
+		pilot.rotate(-1.033*(double)angle);
+	}
+	
+	public void asyncTournerD(int angle) { // tourner a droite de manière asynchrone
+		pilot.setAngularSpeed(100);
+		pilot.rotate(1.033*(double)angle,true);
+	}
+	
+	public void asyncTournerG(int angle) { // tourner a gauche de manière asynchrone
+		pilot.setAngularSpeed(100);
+		pilot.rotate(-1.033*(double)angle,true);
+	}
+	
+	public void seDecalerD() {// tourner a droite, avancer puis tourner a gauche
+		tournerD(45);
+		avancer(300, 300);
+		tournerG(47);
+	}
+
+	public void seDecalerG() {// tourner a gauche, avancer puis tourner a droite
+		tournerG(45);
+		avancer(300, 300);
+		tournerD(47);
+	}
+	
+//--------------------------------------------------Autre----------------------------------------------------
+	
+	public void setVitesse(int v) { // changer la vitesse
+		pilot.setLinearSpeed(v);
+	}
+	
+	public boolean isMoving() { // renvoie true si le robot est en mouvement
+		return pilot.isMoving();
+	}
+}   	

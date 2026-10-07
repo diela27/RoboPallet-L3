@@ -1,50 +1,66 @@
 package MonProject;
-import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3IRSensor;
+import java.util.Arrays;
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.hardware.ev3.LocalEV3;
+import lejos.robotics.SampleProvider;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
+
 public class DistanceCapteur {
-
-
-	private EV3IRSensor capteur;
-
-	public DistanceCapteur() {
-		capteur = new EV3IRSensor(SensorPort.S4);
+	private EV3UltrasonicSensor capteurDistance;
+	private SampleProvider distanceSampler;
+	private float[] sample;
+	
+	public DistanceCapteur () {
+		capteurDistance = new EV3UltrasonicSensor(LocalEV3.get().getPort("S4"));   // Initialisation du capteur
+		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
+		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
+	}
+	
+	public DistanceCapteur (Port port) {
+		capteurDistance = new EV3UltrasonicSensor(port);   // Initialisation du capteur
+		distanceSampler = capteurDistance.getDistanceMode(); // Mode pour obtenir l'état du capteur
+		sample = new float[distanceSampler.sampleSize()]; // Stocke le résultat du capteur
 	}
 
-
-	public float getDistance() {
-		float[] distance = new float[1];
-
-		capteur.getDistanceMode().fetchSample(distance, 0);
-
-		return distance[0];
+//-----------------------------------------------Méthodes-------------------------------------------------
+	
+	public float[] recherche(float[] tab) {//méthode utilisée dans la méthode recherche du principal. qui récupère toutes les distance pendant la rotation du robot
+		tab = Arrays.copyOf(tab, tab.length + 1);
+		tab[tab.length-1]=getDistance();
+		return tab;
 	}
 
-
-	public float[] recherche(float[] tab) {
-
-
-		float nouvelleDistance = getDistance();
-
-		float[] nouveauTab = new float[tab.length + 1];
-
-		for (int i = 0; i < tab.length; i++) {
-			nouveauTab[i] = tab[i];
-		}
-
-
-		nouveauTab[tab.length] = nouvelleDistance;
-
-		return nouveauTab;
+	public float getDistance() {//renvoie la distance actuellement captée par le robot
+        setSample();  // Remplir le tableau sample avec les données du capteur
+        return sample[0];  // Retourner la première valeur, qui est la distance mesurée en mètres
+	}
+	
+	public void fermer() {//ferme le capteur de distance
+        capteurDistance.close();
+	}
+	
+	public void ouvrir() {//ouvre le capteur de distance
+        capteurDistance.enable();
+	}
+	
+//-----------------------------------------------Getters and setters-------------------------------------------------
+	
+ 	public void setSample () {
+		distanceSampler.fetchSample(sample,0);
 	}
 
-	public boolean detecterObjet(float distanceMax) {
-		return getDistance() < distanceMax;
+	public float[] getSample () {
+		return sample;
 	}
 
-	public void fermer() {
-		capteur.close();
+	public EV3UltrasonicSensor getCapteurDistance() {
+		return capteurDistance;
 	}
+	
+	public SampleProvider getDistanceSampler() {
+		return distanceSampler;
+	}
+	 
 }
-
-
-
