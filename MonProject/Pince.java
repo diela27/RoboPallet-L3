@@ -10,22 +10,22 @@ public class Pince {
 
 	private RegulatedMotor pinces;
 	public boolean ouvert;
-
+	
 
 	public Pince(Port pincesPort) {
 		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
 		ouvert=false;
 	}
 
-	//-----------------------------------------------Méthodes-------------------------------------------------
-
+//-----------------------------------------------Méthodes-------------------------------------------------
+	
 	public void ouvrir() { // oucre les pinces et annonce au robot qu'elles sont ouvertes
 		if(!this.estOuvert()) {
 			this.pinces.rotate(1000);
 		}
 		this.ouvert=true;
 	}
-
+	
 	public void fermer(){ // ferme les pinces et annonce au robot qu'elles sont fermées
 		if(this.estOuvert()) {
 			pinces.rotate(-1000);
@@ -38,11 +38,11 @@ public class Pince {
 		pinces.rotate(-1000);
 		this.ouvert=false;
 	}
-
+	
 	public void setOuvert(boolean b) { //on annonce au robot que les pinces sont ouvertes
 		ouvert=b;
 	}
-
+	
 	public boolean estOuvert() { //renvoie true si les pinces sont ouvertes
 		return this.ouvert;
 	}

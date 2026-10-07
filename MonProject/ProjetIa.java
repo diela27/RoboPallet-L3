@@ -1,5 +1,4 @@
 package MonProject;
-package iapackage;
 
 import moteurs.*;
 
@@ -466,4 +465,4 @@ public class Principal {
 			break;
 		}
 	}
-}	
+}	}	

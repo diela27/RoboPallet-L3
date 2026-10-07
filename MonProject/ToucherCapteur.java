@@ -1,6 +1,5 @@
 package MonProject;
 
-package capteurs;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3TouchSensor;
 
@@ -8,16 +7,16 @@ public class ToucherCapteur extends EV3TouchSensor {
 	public ToucherCapteur(Port port) {
 		super(port);
 	}
-	
+
 	public boolean estTouche() { // return true si le capteur de contact est touché
-        float[] sample = new float[1];
-        fetchSample(sample, 0);
-        if(sample[0]==0) {
-        	return false;
-        }else {
-        	return true;
-        }
-    }
+		float[] sample = new float[1];
+		fetchSample(sample, 0);
+		if(sample[0]==0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 }
 
 
