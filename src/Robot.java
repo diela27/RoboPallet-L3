@@ -35,9 +35,9 @@ public class Robot {
 		   mv.tourComplet();
 	   }
 	   public float getDistance() {
-	        return capteurs.getDistance();
+	        return capteurs.getDistance();//dj
 	    }
 	}
-//izj
+
 	
 
