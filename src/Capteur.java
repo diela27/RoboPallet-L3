@@ -18,7 +18,7 @@ public class Capteur {
 	        distance.fetchSample(mesure, 0);
 
 	        return mesure[0];
-	    }
+	    }//jj
 
 	    public void fermer() {
 	        capteur.close();
