@@ -1,0 +1,53 @@
+package MonProject;
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.Color;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
+
+public class CouleurCapteur {
+	private Port portCouleur;
+	private static EV3ColorSensor capteurCouleur;
+	public static float[] tab; // tableau d'echantillions de couleur
+	
+	public CouleurCapteur(Port port) {
+		portCouleur = port;//Renvoie un objet port pour le nom du port demandé. Cela permet d'accéder au matériel associé au port spécifié.
+		capteurCouleur = new EV3ColorSensor(portCouleur); // relie l'instance crée a l'objet
+		capteurCouleur.setFloodlight(Color.WHITE); //Permet d'allumer ou d'éteindre le projecteur par couleur.
+		capteurCouleur.setCurrentMode("RGB"); //Définit le mode actuel de récupération des échantillons dans notre cas ce sera en RGB (rouge vert bleu en francais)
+		
+}
+	
+//-----------------------------------------------Méthodes-------------------------------------------------
+
+	public Color getCouleur(){	// recupere le code rgb de la couleur dans un objet "Color"
+		tab = new float[capteurCouleur.sampleSize()]; 
+		capteurCouleur.fetchSample(tab, 0); // récupère les données RGB du capteur couleur
+		return new Color((int)(tab[0] * 255), (int)(tab[1] * 255), (int)(tab[2] * 255)); // retourne la couleur associé au code rgb
+		
+	}
+			
+	public String nomCouleur(int r, int g, int b) { //renvoie le nom de la couleur en fonction de son codage rgb récupéré avec getCouleur()
+		if((r<8 && g<8 && b<8)) {
+			return "noir";
+		}else if((r>10 && g>10 && b>10) && (r<25 && g<25 && b<25)) {
+			return "gris";
+		}else if(r>25 && g>25 && b>25) {
+			return "blanc";
+		}else if((r>30 && g>20 && b<10)) {
+			return "jaune";
+		}else if(r>b && r>g) {
+			return "rouge";
+		}else if(g>b && g>r) {
+			return "vert";
+		}else if(b>g && b>r) {
+			return "bleu";
+		}else {
+			return "couleur non présente sur le tableau";
+		}
+	}
+	
+	public void fermerCapteurCouleur() {//ferme (éteint) le capteur couleur
+			capteurCouleur.close(); 
+	}
+}
