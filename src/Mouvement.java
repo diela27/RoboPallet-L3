@@ -88,18 +88,18 @@ public class Mouvement {
     	    Motor.D.stop();
 	    }
 	    public void  tourComplet() {
-	    	/*Motor.A.setSpeed(1000);
-    	    Motor.D.setSpeed(1000);
+	    	Motor.A.setSpeed(600);
+    	    Motor.D.setSpeed(600);
 
     	    Motor.A.backward();
     	    Motor.D.forward();
 
-    	    Delay.msDelay(100);
+    	    Delay.msDelay(1200);
 
-    	    stoproue();  */
-	    	Motor.A.rotate(360);//
+    	    stoproue();  
+	    	
 	    	
 	    }
-	    
+	
 	
 }

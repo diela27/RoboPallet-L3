@@ -1,7 +1,10 @@
 
 public class Robot {
-	Mouvement mv = new Mouvement();
+	Mouvement mv;
+	Capteur capteurs;
 	public Robot() {
+		mv = new Mouvement();
+		capteurs = new Capteur();
 		
 	}
 	 public void avancer() {
@@ -31,6 +34,9 @@ public class Robot {
 	   public void  tourComplet() {
 		   mv.tourComplet();
 	   }
+	   public float getDistance() {
+	        return capteurs.getDistance();
+	    }
 	}
 //izj
 	
