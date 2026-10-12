@@ -1,7 +1,7 @@
 import lejos.hardware.BrickFinder;
 import lejos.hardware.lcd.GraphicsLCD;
 import lejos.utility.Delay;
-//HELLOh
+//HELLOhg
 
 public class FirstApp {
 
