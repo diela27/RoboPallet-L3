@@ -9,7 +9,7 @@ public class Mouvement {
 	        
 	    }
 
-	   
+	    
 	    public void avancer() {
 	    	 Motor.A.setSpeed(1000);
 	         Motor.D.setSpeed(1000);
@@ -88,17 +88,20 @@ public class Mouvement {
     	    Motor.D.stop();
 	    }
 	    public void  tourComplet() {
-	    	Motor.A.setSpeed(600);
-    	    Motor.D.setSpeed(600);
+	    	demarrerRotationScan();
 
-    	    Motor.A.backward();
-    	    Motor.D.forward();
+	        Delay.msDelay(12000);
 
-    	    Delay.msDelay(1200);
-
-    	    stoproue();  
+	        stoproue(); 
 	    	
 	    	
+	    }
+	    public void demarrerRotationScan() {
+	        Motor.A.setSpeed(300);
+	        Motor.D.setSpeed(300);
+
+	        Motor.A.backward();
+	        Motor.D.forward();
 	    }
 	
 	

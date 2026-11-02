@@ -12,13 +12,13 @@ public class Capteur {
 	        distance = capteur.getDistanceMode();
 
 	        mesure = new float[distance.sampleSize()];
-	    }//l
+	    }
 
 	    public float getDistance() {
 	        distance.fetchSample(mesure, 0);
 
 	        return mesure[0];
-	    }//jj
+	    }
 
 	    public void fermer() {
 	        capteur.close();

@@ -1,27 +1,60 @@
+import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 import lejos.hardware.Button;
-import lejos.hardware.lcd.LCD;
-import lejos.utility.Delay;
+
 public class Main {
-	public static void main(String[]args) {
-		Robot r = new Robot();
-		//r.avancer();
-		//r.tournerDroite();
-		//r.tournerGauche();
-		//r.ouvrirBras(4000);
-		//r.fermerBras(4000);
-		
-		//r.tourComplet();
-		//r.ouvrirBras(4000);
-		while (!Button.ESCAPE.isDown()) {
-		    float distance = r.getDistance();
 
-		    LCD.clear();
-		    LCD.drawString("Distance :", 0, 0);
-		    LCD.drawString(distance + " m", 0, 1);
+    public static void main(String[] args) {
 
-		    Delay.msDelay(200);
-		}
-	     
-	    }
-	}
+        Robot r = new Robot();
 
+        try {
+            System.out.println("Debut du scan");
+
+     
+            ArrayList<Mesure> mesures = r.scanner();
+
+            System.out.println("Scan termine");
+            System.out.println("Nombre de mesures : " + mesures.size());
+
+    
+            BufferedWriter fichier = new BufferedWriter(
+                new FileWriter("./mesures.csv")
+            );
+
+            fichier.write("Angle;Distance");
+            fichier.newLine();
+
+            
+            for (Mesure m : mesures) {
+
+                fichier.write(
+                    m.getAngle() + ";" + m.getDistance()
+                );
+
+                fichier.newLine();
+            }
+
+          
+            fichier.close();
+
+            System.out.println("Fichier enregistre !");
+            System.out.println("Nom : mesures.csv");
+
+            while (!Button.ESCAPE.isDown()) {
+            }
+
+        } catch (IOException e) {
+
+            System.out.println("Erreur fichier : " + e.getMessage());
+
+        } finally {
+
+            r.stop();
+            r.fermerCapteur();
+        }
+    }
+}
