@@ -1,0 +1,49 @@
+package MonProject;
+
+import lejos.hardware.motor.MindsensorsGlideWheelMRegulatedMotor;
+import lejos.hardware.port.Port;
+import lejos.robotics.RegulatedMotor;
+
+//-----------------------------------------------BASE DE LA CLASSE-------------------------------------------------
+
+public class Pince {
+
+	private RegulatedMotor pinces;
+	public boolean ouvert;
+	
+
+	public Pince(Port pincesPort) {
+		pinces = new MindsensorsGlideWheelMRegulatedMotor(pincesPort);
+		ouvert=false;
+	}
+
+//-----------------------------------------------Méthodes-------------------------------------------------
+	
+	public void ouvrir() { // oucre les pinces et annonce au robot qu'elles sont ouvertes
+		if(!this.estOuvert()) {
+			this.pinces.rotate(1000);
+		}
+		this.ouvert=true;
+	}
+	
+	public void fermer(){ // ferme les pinces et annonce au robot qu'elles sont fermées
+		if(this.estOuvert()) {
+			pinces.rotate(-1000);
+		}
+		this.ouvert=false;
+	}
+
+	public void fermerObligatoirement() {// si on a un problème avec le booléen on ferme les pinces sont vérifier si elles sont ouvertes
+		pinces.setSpeed(800);
+		pinces.rotate(-1000);
+		this.ouvert=false;
+	}
+	
+	public void setOuvert(boolean b) { //on annonce au robot que les pinces sont ouvertes
+		ouvert=b;
+	}
+	
+	public boolean estOuvert() { //renvoie true si les pinces sont ouvertes
+		return this.ouvert;
+	}
+}

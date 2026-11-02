@@ -1,8 +1,7 @@
 import lejos.hardware.BrickFinder;
 import lejos.hardware.lcd.GraphicsLCD;
 import lejos.utility.Delay;
-
-
+//HELLO
 public class FirstApp {
 
     /**
@@ -11,10 +10,10 @@ public class FirstApp {
     public static void main(String[] args) {
         GraphicsLCD g = BrickFinder.getDefault().getGraphicsLCD();
         
-        g.drawString("Hello World", 0, 0, GraphicsLCD.VCENTER |
+        g.drawString("  Hello World", 0, 0, GraphicsLCD.VCENTER |
                 GraphicsLCD.LEFT);
         
-        Delay.msDelay(5000);//UHDYGYGGFF
+        Delay.msDelay(5000);
     }
-
+    
 }
