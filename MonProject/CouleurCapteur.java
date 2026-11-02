@@ -46,7 +46,7 @@ public class CouleurCapteur {
 			return "couleur non présente sur le tableau";
 		}
 	}
-	
+	??KK
 	public void fermerCapteurCouleur() {//ferme (éteint) le capteur couleur
 			capteurCouleur.close(); 
 	}

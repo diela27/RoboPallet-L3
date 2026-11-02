@@ -1,9 +1,7 @@
 import lejos.hardware.BrickFinder;
 import lejos.hardware.lcd.GraphicsLCD;
 import lejos.utility.Delay;
-
 //HELLO
-
 public class FirstApp {
 
     /**
@@ -18,6 +16,4 @@ public class FirstApp {
         Delay.msDelay(5000);
     }
     
-    
-
 }
