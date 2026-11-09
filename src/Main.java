@@ -55,6 +55,6 @@ public class Main {
 
             r.stop();
             r.fermerCapteur();
-        }//hh
+        }//hhg
     }
 }

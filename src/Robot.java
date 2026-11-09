@@ -82,7 +82,7 @@ public class Robot {
 
         return mesures;
     }
-//j
+//jp
     public void fermerCapteur() {
         capteurs.fermer();
     }
