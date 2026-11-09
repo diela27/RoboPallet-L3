@@ -13,6 +13,6 @@ public class FirstApp {
                 GraphicsLCD.LEFT);
         
         Delay.msDelay(5000);
-    }
+    }//dj
 
 }//gj
