@@ -61,7 +61,7 @@ public class Robot {
             while (System.currentTimeMillis() - debut < dureeScan) {
 
                 long tempsEcoule =
-                    System.currentTimeMillis() - debut;
+                    System.currentTimeMillis() - debut;//
 
                 float angle =
                     (tempsEcoule / (float) dureeScan) * 360.0f;

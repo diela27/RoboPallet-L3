@@ -22,5 +22,5 @@ public class Capteur {
 
 	    public void fermer() {
 	        capteur.close();
-	    }
+	    }//
 }

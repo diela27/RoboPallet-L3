@@ -41,7 +41,7 @@ public class Main {
           
             fichier.close();
 
-            System.out.println("Fichier enregistre !");
+            System.out.println("Fichier enregistre");
             System.out.println("Nom : mesures.csv");
 
             while (!Button.ESCAPE.isDown()) {
@@ -55,6 +55,6 @@ public class Main {
 
             r.stop();
             r.fermerCapteur();
-        }
+        }//h
     }
 }
