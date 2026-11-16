@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
 import lejos.hardware.Button;
 
 public class Main {

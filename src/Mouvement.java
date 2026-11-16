@@ -2,107 +2,99 @@ import lejos.hardware.motor.Motor;
 import lejos.utility.Delay;
 
 public class Mouvement {
-	
 
-	    
-	    public Mouvement() {
-	        
-	    }
+    public Mouvement() {
+    }
 
-	    
-	    public void avancer() {
-	    	 Motor.A.setSpeed(1000);
-	         Motor.D.setSpeed(1000);
-	         Motor.A.forward();
-	         Motor.D.forward();
-	        
+    public void avancer() {
+        Motor.A.setSpeed(1000);
+        Motor.D.setSpeed(1000);
 
-	         Delay.msDelay(3000); 
+        Motor.A.forward();
+        Motor.D.forward();
 
-	         Motor.A.stop();
-	         Motor.D.stop();
-	    }
+        Delay.msDelay(3000);
+        stoproue();
+    }
 
-	   
-	    public void reculer() {
-	    	 Motor.A.setSpeed(1000);
-	         Motor.D.setSpeed(1000);
-	         Motor.A.backward();
-	         Motor.D.backward();
-	        
+    public void reculer() {
+        Motor.A.setSpeed(1000);
+        Motor.D.setSpeed(1000);
 
-	         Delay.msDelay(3000); 
+        Motor.A.backward();
+        Motor.D.backward();
 
-	         Motor.A.stop();
-	         Motor.D.stop();
-	    }
+        Delay.msDelay(3000);
+        stoproue();
+    }
 
-	   
-	    public void tournerDroite() {
-	    	
-	    	    Motor.A.setSpeed(200);
-	    	    Motor.D.setSpeed(200);
+    public void tournerDroite() {
+        Motor.A.setSpeed(200);
+        Motor.D.setSpeed(200);
 
-	    	    Motor.A.forward();
-	    	    Motor.D.backward();
+        Motor.A.forward();
+        Motor.D.backward();
 
-	    	    Delay.msDelay(760);
+        Delay.msDelay(760);
+        stoproue();
+    }
 
-	    	   stoproue();
-	    	
-	    }
+    public void tournerGauche() {
+        Motor.A.setSpeed(200);
+        Motor.D.setSpeed(200);
 
-	   
-	    public void tournerGauche() {
-	        Motor.A.setSpeed(200);
-    	    Motor.D.setSpeed(200);
+        Motor.A.backward();
+        Motor.D.forward();
 
-    	    Motor.A.backward();
-    	    Motor.D.forward();
+        Delay.msDelay(760);
+        stoproue();
+    }
 
-    	    Delay.msDelay(760);
+    public void ourvirBras(int i) {
+        Motor.B.setSpeed(500);
+        Motor.B.forward();
 
-    	    stoproue();
-	    }
-		public void ourvirBras(int i ) {
-		 	Motor.B.setSpeed(500);
+        Delay.msDelay(i);
+        Motor.B.stop();
+    }
 
-	        Motor.B.forward();  
+    public void fermerBras(int i) {
+        Motor.B.setSpeed(500);
+        Motor.B.backward();
 
-	        Delay.msDelay(i); 
+        Delay.msDelay(i);
+        Motor.B.stop();
+    }
 
-	        Motor.B.stop(); 
-	}
-		public void fermerBras(int i ) {
-		 	Motor.B.setSpeed(500);
+    public void stoproue() {
+        Motor.A.stop();
+        Motor.D.stop();
+    }
 
-	        Motor.B.backward();  
+   
+    public void initialiserEncodeurs() {
+        Motor.A.resetTachoCount();
+        Motor.D.resetTachoCount();
+    }
 
-	        Delay.msDelay(i); 
+    
+    public void demarrerRotationScan() {
+        Motor.A.setSpeed(400);
+        Motor.D.setSpeed(400);
 
-	        Motor.B.stop(); 
-	}
-	   
-	    public void stoproue() {
-	    	Motor.A.stop();
-    	    Motor.D.stop();
-	    }
-	    public void  tourComplet() {
-	    	demarrerRotationScan();
+        Motor.A.backward();
+        Motor.D.forward();
+    }
 
-	        Delay.msDelay(12000);
+    
+    public float getRotationScan() {
+        int angleA = Motor.A.getTachoCount();
+        int angleD = Motor.D.getTachoCount();
 
-	        stoproue(); 
-	    	
-	    	
-	    }
-	    public void demarrerRotationScan() {
-	        Motor.A.setSpeed(300);
-	        Motor.D.setSpeed(300);
+        return (Math.abs(angleA) + Math.abs(angleD)) / 2.0f;
+    }
 
-	        Motor.A.backward();
-	        Motor.D.forward();
-	    }
-	//fi
-	
+    public void arreterRotationScan() {
+        stoproue();
+    }
 }
